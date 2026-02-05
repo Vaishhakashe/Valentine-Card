@@ -79,7 +79,6 @@
 
     .heart {
         position: absolute;
-        color: red;
         font-size: 20px;
         animation: float 5s linear infinite;
     }
@@ -94,7 +93,8 @@
 <body>
 
 <div class="card" id="card">
-    <h1>Would you like to be my Valentine? 💘</h1>
+    <!-- ✨ CHANGE NAME HERE ✨ -->
+    <h1>Hey Vishnu, would you like to be my Valentine? 💘</h1>
 
     <div class="buttons">
         <button id="yesBtn">Yes ❤️</button>
@@ -107,11 +107,15 @@
     </div>
 </div>
 
+<!-- 🎶 Background Music -->
+<audio id="bgMusic" src="music.mp3"></audio>
+
 <script>
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
     const loveMessage = document.getElementById("loveMessage");
     const card = document.getElementById("card");
+    const music = document.getElementById("bgMusic");
 
     noBtn.style.top = "50px";
     noBtn.style.left = "160px";
@@ -127,6 +131,7 @@
         card.querySelector("h1").style.display = "none";
         card.querySelector(".buttons").style.display = "none";
         loveMessage.style.display = "block";
+        music.play();
         createHearts();
     });
 
