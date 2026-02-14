@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Be My Valentine ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        font-family: 'Poppins', sans-serif;
+        overflow: hidden;
+    }
+    .card {
+        background: white;
+        padding: 25px;
+        border-radius: 20px;
+        text-align: center;
+        width: 320px;
+        max-width: 90vw;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        animation: pop 1s ease;
+    }
+    @keyframes pop {
+        0% { transform: scale(0.7); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+    h1 {
+        color: #e91e63;
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+    .buttons {
+        position: relative;
+        height: 150px;
+        width: 100%;
+    }
+    button {
+        padding: 10px 22px;
+        border: none;
+        border-radius: 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+        touch-action: none;
+    }
+    #yesBtn {
+        background: #e91e63;
+        color: white;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    #yesBtn:hover {
+        transform: translateX(-50%) scale(1.1);
+    }
+    #noBtn {
+        background: #ccc;
+        position: absolute;
+        transition: all 0.3s ease;
+    }
+    .love-message {
+        display: none;
+    }
+    .love-message img {
+        width: 100%;
+        border-radius: 15px;
+        margin-top: 15px;
+    }
+    .heart {
+        position: absolute;
+        font-size: 20px;
+        animation: float 5s linear infinite;
+        pointer-events: none;
+    }
+    @keyframes float {
+        0% { transform: translateY(0); opacity: 1; }
+        100% { transform: translateY(-100vh); opacity: 0; }
+    }
+</style>
+</head>
+<body>
+<div class="card" id="card">
+    <!-- ✨ CHANGE NAME HERE ✨ -->
+    <h1>Hey Vishnu, would you like to be my Valentine? 💘</h1>
+    <div class="buttons">
+        <button id="yesBtn">Yes ❤️</button>
+        <button id="noBtn">No 😜</button>
+    </div>
+    <div class="love-message" id="loveMessage">
+        <h1>I love you my Valentine ❤️</h1>
+        <img src="photo.jpg" alt="Our Photo">
+    </div>
+</div>
+<!-- 🎶 Background Music -->
+<audio id="bgMusic" src="music.mp3"></audio>
+<script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const loveMessage = document.getElementById("loveMessage");
+    const card = document.getElementById("card");
+    const music = document.getElementById("bgMusic");
+    const buttonsContainer = document.querySelector(".buttons");
+    
+    // Set initial position for No button
+    noBtn.style.top = "20px";
+    noBtn.style.left = "50%";
+    noBtn.style.transform = "translateX(-50%)";
+    
+    // Function to move the No button to a random position
+    function moveNoButton() {
+        const containerWidth = buttonsContainer.offsetWidth;
+        const containerHeight = buttonsContainer.offsetHeight;
+        const btnWidth = noBtn.offsetWidth;
+        const btnHeight = noBtn.offsetHeight;
+        
+        // Calculate random position within container bounds
+        const maxX = containerWidth - btnWidth;
+        const maxY = containerHeight - btnHeight - 50; // Leave space for Yes button at bottom
+        
+        const x = Math.random() * maxX;
+        const y = Math.random() * maxY;
+        
+        noBtn.style.left = `${x}px`;
+        noBtn.style.top = `${y}px`;
+        noBtn.style.transform = "none";
+    }
+    
+    // Handle both mouse and touch events
+    noBtn.addEventListener("mouseover", moveNoButton);
+    noBtn.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        moveNoButton();
+    });
+    
+    // Handle click/tap on No button (just in case they manage to tap it)
+    noBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        moveNoButton();
+    });
+    
+    yesBtn.addEventListener("click", () => {
+        card.querySelector("h1").style.display = "none";
+        card.querySelector(".buttons").style.display = "none";
+        loveMessage.style.display = "block";
+        
+        // Try to play music (may require user interaction on some devices)
+        music.play().catch(err => {
+            console.log("Audio playback failed:", err);
+        });
+        
+        createHearts();
+    });
+    
+    function createHearts() {
+        for (let i = 0; i < 30; i++) {
+            const heart = document.createElement("div");
+            heart.className = "heart";
+            heart.innerHTML = "❤️";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+            heart.style.animationDelay = (Math.random() * 0.5) + "s";
+            document.body.appendChild(heart);
+            setTimeout(() => {
+                heart.remove();
+            }, 6000);
+        }
+    }
+</script>
+</body>
+</html>
